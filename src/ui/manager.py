@@ -82,6 +82,25 @@ class Manager(ctk.CTk):
 
     def initFrame(self, frame: str) -> None:
         new_frame = self.strToFrame(frame)(self)
+        new_frame.grid(row=0, column=0, sticky="nesw")
         self.frames[frame] = new_frame
-        new_frame.grid(row=0, column=1, sticky="nsew")
+
+    def deleteFrame(self, frame: str) -> None:
+        if self.frames[frame] is None:
+            return
+
+        self.frames[frame].destroy()
+        self.frames[frame] = None
+
+    def deleteFrameAll(self) -> None:
+        for i in self.frame_class.keys():
+            self.deleteFrame(i)
+
+    def reinitFrame(self, frame: str) -> None:
+        self.deleteFrame(frame)
+        self.initFrame(frame)
+
+    def reinitFrameAll(self) -> None:
+        for i in self.frame_class.keys():
+            self.reinitFrame(i)
         
